@@ -59,9 +59,6 @@ init_patch()
 	registerclientfield( "toplayer", "challenge_complete_2", 14000, 1, "int" );
 	registerclientfield( "toplayer", "challenge_complete_3", 14000, 1, "int" );
 	registerclientfield( "toplayer", "challenge_complete_4", 14000, 1, "int" );
-/#
-	level thread challenges_devgui();
-#/
 }
 
 onplayerconnect_patch() {
@@ -650,52 +647,7 @@ spawn_reward_patch( player, s_select_stat )
 
 devgui_award_challenge_patch( n_index )
 {
-/#
-	if ( n_index == 4 )
-	{
-		s_team_stats = level._challenges.s_team;
-		s_team_stats.n_completed = 1;
-		s_team_stats.n_medals_held = 1;
-		a_keys = getarraykeys( level._challenges.s_team.a_stats );
-		s_stat = level._challenges.s_team.a_stats[ a_keys[ 0 ] ];
-		s_stat.b_medal_awarded = 1;
-		s_stat.b_reward_claimed = 0;
-        foreach ( player in a_players )
-		{
-			s_stat.a_b_player_rewarded[ player.playerIndex ] = 0;
-			player setclientfieldtoplayer( s_stat.s_parent.cf_complete, 1 );
-		}
-        foreach ( m_board in level.a_m_challenge_boards )
-		{
-            m_board showpart( s_stat.str_glow_tag );
-		}
-	}
-	else
-    {
-    a_keys = getarraykeys( level._challenges.a_players[ 0 ].a_stats );
-    }
-	a_players = get_players();
-    foreach ( player in a_players )
-	{
-		s_player_data = level._challenges.a_players[ player.playerIndex ];
-		s_player_data.n_completed++;
-		s_player_data.n_medals_held++;
-		s_stat = s_player_data.a_stats[ a_keys[ n_index - 1 ] ];
-		s_stat.b_medal_awarded = 1;
-		s_stat.b_reward_claimed = 0;
-		player setclientfieldtoplayer( s_stat.s_parent.cf_complete, 1 );
-        foreach ( m_board in level.a_m_challenge_boards )
-		{
-            // We only show the tag for the box we can use!
-            if (m_board.m_index > 0 && player.playerIndex > 3) {
-                m_board showpart( s_stat.str_glow_tag );
-            }
-            if (m_board.m_index <= 0 && player.playerIndex <= 3) {
-                m_board showpart( s_stat.str_glow_tag );
-            }
-		}
-	}
-#/
+
 }
 
 // zm_tomb_challenges patches.
